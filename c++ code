@@ -4,10 +4,10 @@
 using namespace std;
 int n;
 ll k;
-int needed[3];
+int needed[7];
 bool can (int have[], int needed[], int price[], ll mid){
     ll money = k;
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 7; i++){
             ll required = needed[i] * mid;
         //if (required < have[i]){
         //    continue;
@@ -23,6 +23,24 @@ bool can (int have[], int needed[], int price[], ll mid){
         return false;
     }
 }
+
+/*
+bread = B
+sausage = S
+cheese = C
+tomato = T
+lettuce = L
+pickles = P
+onions = O
+
+
+The ingredients in the recipe go from bottom to top, 
+for example, recipe "ВSCBS" represents the hamburger where the ingredients
+go from bottom to top as bread, sausage, cheese, bread and sausage again.
+
+
+
+*/
 
 int main()
 {
@@ -40,9 +58,21 @@ for (int i = 0; i < s.size(); i++){
     else if (s[i] == 'C'){
         needed[2]++;
     }
+ else if (s[i] == 'T'){
+        needed[3]++;
+    }
+     else if (s[i] == 'L'){
+        needed[4]++;
+    }
+     else if (s[i] == 'P'){
+        needed[5]++;
+    }
+     else if (s[i] == 'O'){
+        needed[6]++;
+    }
 }
-int have[3];
-int price[3];
+int have[7];
+int price[7];
 for (int i = 0; i < 3; i++){
     cin >> have[i];
 }
