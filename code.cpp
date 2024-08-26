@@ -34,9 +34,16 @@ pickles = P
 onions = O
 
 
-The ingredients in the recipe go from bottom to top, 
+The ingredients in the recipe go from bottom to top,
 for example, recipe "ВSCBS" represents the hamburger where the ingredients
 go from bottom to top as bread, sausage, cheese, bread and sausage again.
+
+thinking of defining the ingredients where the user will set the ingredients and the character representing them
+ex: pickles = P
+bread = B
+so on...
+till they say "recipe:"
+then the code runs normally
 
 
 
@@ -45,6 +52,34 @@ go from bottom to top as bread, sausage, cheese, bread and sausage again.
 int main()
 {
 ios::sync_with_stdio(0); cin.tie(0);
+ /*
+string inp;
+map <string, char> ingr;
+string ingredient;
+char symbl;
+map <char, int> letter;
+int cntr = 0;
+while (inp != "recipe:"){
+    getline(cin, inp);
+    for (int i = 0; i < inp.size(); i++){
+        if (inp[i] != "=" && inp[i] != " "){
+            ingredient += inp[i];
+        }
+        else {
+            if (inp[i + 1] != " "){symbl = inp[i +1];}
+            else {symbl = inp[i +1];  }
+             ingr[ingredient] = cntr;
+
+             letter[cntr] = symbl;
+             cntr++;
+            continue;
+        }
+    }
+}
+
+
+
+*/
 
 string s;
 cin >> s;
