@@ -24,3 +24,5 @@ we need a slice of cheese to make a sandwich, and we have one.
 the price of a slice of cheese is 3$, so by spending our money, we can buy one more slice, and we'll have a dollar remaining.
 that's just enough to make two sandwiches, and not more.
 
+
+PS: if you don't know how to run a c++ code, you can copy the code and paste it in codeblocks or visual basic! in codeblocks, clicking on f9 will do.
