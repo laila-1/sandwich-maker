@@ -1,135 +1,86 @@
 #include <bits/stdc++.h>
-#include <iostream>
-#define ll long long
 using namespace std;
-int n;
+
+#define ll long long
+
+map<char, int> symb_idx;
+vector<int> needed;
+vector<int> have;
+vector<int> price;
 ll k;
-int needed[7];
-bool can (int have[], int needed[], int price[], ll mid){
+
+bool can(const vector<int>& have, const vector<int>& needed, const vector<int>& price, ll mid) {
     ll money = k;
-    for (int i = 0; i < 7; i++){
-            ll required = needed[i] * mid;
-        //if (required < have[i]){
-        //    continue;
-        //}
-        if (required > have[i]){
-            money -= (required - have[i]) * price[i];
+    for (char c = 'A'; c <= 'Z'; c++) {
+        if (symb_idx.find(c) != symb_idx.end()) {
+            int idx = symb_idx[c];
+            ll required = needed[idx] * mid;
+            if (required > have[idx]) {
+                money -= (required - have[idx]) * price[idx];
+            }
         }
     }
-    if (money >= 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
+    return money >= 0;
 }
 
-/*
-bread = B
-sausage = S
-cheese = C
-tomato = T
-lettuce = L
-pickles = P
-onions = O
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
+    int num;
+    cout << "Please enter the number of ingredients for your sandwich!!" << endl;
+    cin >> num;
 
-The ingredients in the recipe go from bottom to top,
-for example, recipe "ВSCBS" represents the hamburger where the ingredients
-go from bottom to top as bread, sausage, cheese, bread and sausage again.
+    symb_idx.clear();
+    needed.resize(num, 0);
+    have.resize(num, 0);
+    price.resize(num, 0);
 
-thinking of defining the ingredients where the user will set the ingredients and the character representing them
-ex: pickles = P
-bread = B
-so on...
-till they say "recipe:"
-then the code runs normally
+    cout << "Please enter the symbols representing each ingredient and their price:" << endl;
+    for (int i = 0; i < num; i++) {
+        char symbol;
+        int p;
+        cout << "Symbol " << (i + 1) << ": " << endl;
+        cin >> symbol;
+        cout << "Price for " << symbol << ": " << endl;
+        cin >> p;
+        symb_idx[symbol] = i;
+        price[i] = p;
+    }
 
+    string s;
+    cout << "Please enter the recipe using the symbols: " << endl;
+    cin >> s;
 
-
-*/
-
-int main()
-{
-ios::sync_with_stdio(0); cin.tie(0);
- /*
-string inp;
-map <string, char> ingr;
-string ingredient;
-char symbl;
-map <char, int> letter;
-int cntr = 0;
-while (inp != "recipe:"){
-    getline(cin, inp);
-    for (int i = 0; i < inp.size(); i++){
-        if (inp[i] != "=" && inp[i] != " "){
-            ingredient += inp[i];
-        }
-        else {
-            if (inp[i + 1] != " "){symbl = inp[i +1];}
-            else {symbl = inp[i +1];  }
-             ingr[ingredient] = cntr;
-
-             letter[cntr] = symbl;
-             cntr++;
-            continue;
+    for (char c : s) {
+        if (symb_idx.find(c) != symb_idx.end()) {
+            needed[symb_idx[c]]++;
         }
     }
-}
 
+    cout << "Please enter the amount you have of each ingredient (in the same order as entered):" << endl;
+    for (int i = 0; i < num; i++) {
+        cout << "Quantity for ingredient " << (i + 1) << ": " << endl;
+        cin >> have[i];
+    }
 
+    cout << "Please enter the budget!" << endl;
+    cin >> k;
 
-*/
+    // binary search to find the maximum number of sandwiches u can make
+    ll l = 0, r = 1e12;
+    ll ans = 0;
+    while (l <= r) {
+        ll mid = (l + r) / 2;
+        if (can(have, needed, price, mid)) {
+            ans = mid;
+            l = mid + 1;
+        } else {
+            r = mid - 1;
+        }
+    }
 
-string s;
-cin >> s;
-for (int i = 0; i < s.size(); i++){
-    if (s[i] == 'B'){
-        needed[0]++;
-    }
-    else if (s[i] == 'S'){
-        needed[1]++;
-    }
-    else if (s[i] == 'C'){
-        needed[2]++;
-    }
- else if (s[i] == 'T'){
-        needed[3]++;
-    }
-     else if (s[i] == 'L'){
-        needed[4]++;
-    }
-     else if (s[i] == 'P'){
-        needed[5]++;
-    }
-     else if (s[i] == 'O'){
-        needed[6]++;
-    }
-}
-int have[7];
-int price[7];
-for (int i = 0; i < 3; i++){
-    cin >> have[i];
-}
-for (int i = 0; i < 3; i++){
-    cin >> price[i];
-}
-cin >> k;
-ll l = 0, r = 1e15;
-ll mid;
-ll ans = 0;
-while (l <= r){
-    mid = (l + r) / 2;
-    if (can(have, needed, price, mid)){
-        ans = mid;
-        l = mid + 1;
-    }
-    else {
-        r = mid - 1;
-    }
-}
-cout << ans << endl;
+    cout << "Maximum number of sandwiches you can make: "<< endl << ans << endl;
 
     return 0;
-
 }
